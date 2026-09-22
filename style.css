@@ -1,0 +1,266 @@
+:root {
+  --bg-color: #0d1117;
+  --surface-color: #161b22;
+  --accent-color: #bb86fc;
+  --text-color: #c9d1d9;
+  --text-bright: #ffffff;
+  --primary: #388bfd;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-padding-top: 3rem;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family:
+    'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans',
+    Meiryo, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+header {
+  background: linear-gradient(135deg, #1f1a3a 0%, #0d1117 100%);
+  padding: 60px 20px;
+  text-align: center;
+  border-bottom: 2px solid #21262d;
+}
+
+.header-logo {
+  max-width: 150px;
+  margin-bottom: 20px;
+}
+
+h1 {
+  color: var(--text-bright);
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: var(--accent-color);
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+nav {
+  background-color: var(--surface-color);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid #21262d;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+nav ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+nav a {
+  color: var(--text-color);
+  text-decoration: none;
+  padding: 10px 15px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: var(--accent-color);
+}
+
+main {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+section {
+  background-color: var(--surface-color);
+  padding: 40px;
+  border-radius: 12px;
+  margin-bottom: 40px;
+  border: 1px solid #21262d;
+}
+
+h2 {
+  color: var(--text-bright);
+  border-left: 5px solid var(--accent-color);
+  padding-left: 15px;
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+}
+
+h3 {
+  color: var(--text-bright);
+  margin: 20px 0 10px 0;
+  font-size: 1.3rem;
+}
+
+p {
+  margin-bottom: 15px;
+}
+
+.program-card {
+  background-color: #1f242c;
+  padding: 25px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-left: 4px solid var(--primary);
+}
+
+.sponsor-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .sponsor-grid {
+    grid-template-columns: 1fr;
+  }
+  section {
+    padding: 20px;
+  }
+}
+
+.sponsor-card {
+  background-color: #1f242c;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.section-img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+/* タイムラインのスタイル */
+.timeline-container {
+  background: linear-gradient(145deg, #1b162b, #161b22);
+  border: 2px solid var(--accent-color);
+}
+
+.timeline-list {
+  list-style: none;
+  margin-top: 20px;
+}
+
+.timeline-item {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #21262d;
+  font-size: 1.1rem;
+}
+
+.timeline-item:last-child {
+  border-bottom: none;
+}
+
+.timeline-time {
+  font-weight: bold;
+  color: var(--accent-color);
+  min-width: 130px;
+}
+
+.timeline-name {
+  color: var(--text-bright);
+  font-weight: bold;
+}
+
+/* お問い合わせフォーム */
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--text-bright);
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 12px;
+  background-color: #0d1117;
+  border: 1px solid #21262d;
+  border-radius: 6px;
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--accent-color);
+  outline: none;
+}
+
+button {
+  background-color: var(--accent-color);
+  color: #000;
+  border: none;
+  padding: 12px 30px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+button:disabled {
+  background-color: revert;
+  cursor: revert;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+/* ダミープレイヤー */
+.player-box {
+  background: #21262d;
+  padding: 15px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-direction: column;
+}
+
+.player-btn {
+  background: var(--accent-color);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+footer {
+  text-align: center;
+  padding: 40px;
+  border-top: 1px solid #21262d;
+  font-size: 0.9rem;
+}

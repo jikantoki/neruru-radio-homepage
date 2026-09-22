@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ねるるラジオ 公式ホームページ</title>
+    <!-- 外部CSSファイルの読み込み -->
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="./assets/logo.jpg" />
+    <link rel="manifest" href="./manifest.json" />
+  </head>
+  <body>
+    <!-- セクション1：ねるるラジオへようこそ -->
+    <header id="welcome">
+      <a href="#">
+        <img
+          src="./assets/logo.jpg"
+          alt="ねるるラジオの公式ロゴ画像"
+          class="header-logo"
+          style="border-radius: 6px"
+        />
+      </a>
+      <h1>ねるるラジオへようこそ！</h1>
+      <p class="subtitle">
+        24時間いつでも、あなたの心に寄り添うインターネットラジオ
+      </p>
+    </header>
+
+    <nav>
+      <ul style="width: fit-content">
+        <li><a href="#welcome">トップ</a></li>
+        <li><a href="#timeline">オンエア情報</a></li>
+        <li><a href="#about">ねるるラジオとは？</a></li>
+        <li><a href="#programs">番組一覧</a></li>
+        <li><a href="#system">配信の仕組み</a></li>
+        <li><a href="#sponsors">スポンサー</a></li>
+        <li><a href="#contact">お問い合わせ</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <!-- 動的コンテンツ：オンエア＆直近タイムライン -->
+      <section id="timeline" class="timeline-container">
+        <h2>現在のオンエア & タイムライン</h2>
+        <div class="player-box">
+          <h3 style="margin: 0.5em 0; width: 100%">メインチャンネル</h3>
+          <iframe
+            src="https://radio.enoki.xyz/public/neruru-radio/embed"
+            frameborder="0"
+            allowtransparency="true"
+            style="width: 100%; min-height: 150px; height: 150px; border: 0"
+          ></iframe>
+          <div style="display: flex; gap: 1em">
+            <a
+              href="https://radio.enoki.xyz/public/neruru-radio"
+              target="_blank"
+            >
+              <button>配信ページに行く</button>
+            </a>
+            <button onclick="toggleEmbed()">埋め込みを開く</button>
+          </div>
+          <div
+            id="embed"
+            style="
+              background-color: black;
+              padding: 1em;
+              margin: 1em 0;
+              border-radius: 6px;
+              display: none;
+            "
+          >
+            <span style="pointer-events: none; user-select: none">
+              埋め込みは以下をコピーしてください
+            </span>
+            <span
+              style="
+                background-color: var(--accent-color);
+                color: black;
+                user-select: all;
+              "
+            >
+              &lt;iframe src="https://radio.enoki.xyz/public/neruru-radio/embed"
+              frameborder="0" allowtransparency="true" style="width: 100%;
+              min-height: 150px; height: 150px; border: 0;"&gt;&lt;/iframe&gt;
+            </span>
+          </div>
+        </div>
+        <p>これからの放送予定（現在時刻から自動計算しています）</p>
+        <ul class="timeline-list" id="timelineMenu">
+          <!-- JavaScriptによりここに4つの未来番組スロットが挿入されます -->
+        </ul>
+        <div style="margin: 2em"></div>
+        <div class="player-box">
+          <h3 style="margin: 0.5em 0; width: 100%">Lo-Fi専用チャンネル</h3>
+          <iframe
+            src="https://radio.enoki.xyz/public/lofi/embed"
+            frameborder="0"
+            allowtransparency="true"
+            style="width: 100%; min-height: 150px; height: 150px; border: 0"
+          ></iframe>
+        </div>
+      </section>
+
+      <!-- セクション2：ねるるラジオとは？ -->
+      <section id="about">
+        <h2>ねるるラジオとは？</h2>
+        <img
+          src="./assets/about.jpg"
+          alt="深夜のラジオスタジオの風景画像"
+          class="section-img"
+        />
+        <p>
+          ねるるラジオは、インターネットを通じて24時間いつでも聴くことができる、完全オリジナルの架空ラジオ放送局です。
+        </p>
+        <p>
+          最新のテックガジェット情報から、クスッと笑える大喜利、そして眠れない夜にそっと耳を傾けたくなる癒やしのトークまで、幅広いジャンルの番組を定時配信しています。作業用BGMとして、またはベッドに入って眠りにつくまでのひとときに、極上の音声体験をお届けします。
+        </p>
+      </section>
+
+      <!-- セクション3：番組一覧 -->
+      <section id="programs">
+        <h2>番組一覧</h2>
+        <p>ねるるラジオで毎日放送されている個性豊かな番組ラインナップです。</p>
+
+        <div class="program-card">
+          <h3>🪐 ワールド・ナウ</h3>
+          <p><strong>放送時間：</strong>23:00～翌4:00の毎時00分（各11分間）</p>
+          <p>
+            世界中の最新ニュースやトレンド、地球の「今」をディープに掘り下げてご紹介する知的情報番組です。深夜の静寂の中に響く、落ち着いたトーンの解説をお楽しみください。
+          </p>
+        </div>
+
+        <div class="program-card">
+          <h3>💬 ラジオオギリ</h3>
+          <p><strong>放送時間：</strong>5:00～22:00の毎時00分（各11分間）</p>
+          <p>
+            リスナーから寄せられたお題への回答を紹介する大喜利番組。仕事や勉強の合間に一息つける、クスッと笑えるユーモアと、キレのあるボケが毎時間飛び交います。
+          </p>
+        </div>
+
+        <div class="program-card">
+          <h3>🌙 ねるるの眠れない話</h3>
+          <p><strong>放送時間：</strong>21:00～翌4:00の毎時15分（各11分間）</p>
+          <p>
+            どうしても目が冴えて眠れない夜、あなたにそっと語りかけるおやすみ前専用トーク。ナビゲーターの「ねるる」が、心温まるエピソードや不思議な昔話を静かにお話しします。
+          </p>
+        </div>
+
+        <div class="program-card">
+          <h3>☀ オハラジオ</h3>
+          <p><strong>放送時間：</strong>5:00～10:00の毎時15分（各11分間）</p>
+          <p>
+            さわやかな朝のスタートを応援する朝活応援番組。今日のお天気や一日の運勢、元気が湧いてくるポジティブな音楽とトークをお届けします。
+          </p>
+        </div>
+
+        <div class="program-card">
+          <h3>🥜 サボさんの千葉来ません？</h3>
+          <p><strong>放送時間：</strong>11:00～20:00の毎時15分（各11分間）</p>
+          <p>
+            千葉を愛し、千葉に愛された男「サボさん」が、千葉県の隠れた名所や絶品グルメ、ローカルな魅力を熱く語り尽くす観光勝手に応援バラエティ。
+          </p>
+        </div>
+
+        <div class="program-card">
+          <h3>📰 ネルラジニュース</h3>
+          <p><strong>放送時間：</strong>毎時30分（各11分間）</p>
+          <p>
+            1時間に1回、世の中の動きをコンパクトにまとめた11分。これさえ聴いておけば、忙しいあなたも社会のトレンドに遅れることはありません。
+          </p>
+        </div>
+
+        <div class="program-card">
+          <h3>🔌 ガジェットマニア</h3>
+          <p><strong>放送時間：</strong>毎時45分（各11分間）</p>
+          <p>
+            最新のスマートフォン、PC周りの周辺機器、自作PCパーツから便利な家電まで、ガジェットを愛するすべての人のための、愛と物欲に溢れた11分間。
+          </p>
+        </div>
+
+        <div class="program-card">
+          <h3>🎶 ときえのき製作楽曲配信（CMあり）</h3>
+          <p><strong>放送時間：</strong>5:00～23:00の放送休止時間帯</p>
+          <p>
+            番組と番組の間には、このラジオのプログラム製作者であるときえのき（エノキ電気）のオリジナル楽曲を配信しています。
+          </p>
+        </div>
+
+        <div class="program-card">
+          <h3>🎶 チル・ミュージック（CMなし）</h3>
+          <p><strong>放送時間：</strong>23:00～翌朝5:00の放送休止時間帯</p>
+          <p>
+            深夜の番組と番組の間は、気が付いたら眠くなって寝てしまうチルなミュージックをお届けいたします。
+          </p>
+        </div>
+      </section>
+
+      <!-- セクション4：このラジオの配信の仕組み -->
+      <section id="system">
+        <h2>このラジオの配信の仕組み</h2>
+        <img
+          src="./assets//haishin-system.jpg"
+          alt="バックグラウンドで動作する配信システムの構成図画像"
+          class="section-img"
+        />
+        <p>
+          ねるるラジオは、最先端のオートメーションプログラムによって完全自動で24時間配信されています。
+        </p>
+        <p>
+          バックグラウンドでは、<strong>PHPとAzuracastで構築された独自のスケジューラプログラム</strong>が常時稼働。番組はGeminiによって自動で台本が書かれており、バッチ処理を駆使してVOICEBOXに読み上げさせています。
+        </p>
+        <p>
+          このプログラムのソースコードは、<a
+            href="https://github.com/jikantoki/gemini-voicevox-radio"
+            target="_blank"
+            >こちらのリンク</a
+          >から無料でダウンロードすることができます。
+        </p>
+        <p>
+          また、各定時番組が設定されていない「隙間時間」には、このプログラムの開発者であるときえのき（エノキ電気）の楽曲、もしくは入眠に最適なチル・ミュージックが流れています。
+        </p>
+        <ul style="margin-left: 1em">
+          <li>
+            <strong>5:00～23:00の間：</strong
+            >ときえのきオリジナル楽曲（合間に自動でスポンサーCMを挟み込み）
+          </li>
+          <li>
+            <strong>23:00～翌5:00の間：</strong
+            >著作権フリーの眠くなるLo-Fi楽曲（ノンストップ・CMなし）
+          </li>
+        </ul>
+      </section>
+
+      <!-- セクション5：スポンサー一覧 -->
+      <section id="sponsors">
+        <h2>スポンサー一覧</h2>
+        <div class="sponsor-grid">
+          <div class="sponsor-card">
+            <h3>⚡ エノキ電気</h3>
+            <img
+              src="./assets/enoki.jpg"
+              style="
+                width: 6em;
+                height: 6em;
+                object-fit: cover;
+                border-radius: 9999px;
+                margin: 0.5em;
+              "
+            />
+            <p>「自由を、創造する」</p>
+            <p style="font-size: 0.9rem; text-align: left; margin-top: 10px">
+              埼玉出身の自営業。このラジオのプログラム開発者。システムエンジニア&作曲家&配達員の三刀流で、独特すぎる手法で自由を創造する。番組が実施されていない昼の時間帯には、彼の楽曲が配信されている。
+            </p>
+          </div>
+          <div class="sponsor-card">
+            <h3>📻 ねるる</h3>
+            <img
+              src="./assets/neruru.jpg"
+              style="
+                width: 6em;
+                height: 6em;
+                object-fit: cover;
+                border-radius: 9999px;
+                margin: 0.5em;
+              "
+            />
+            <p>「デザインの事なら、お任せください」</p>
+            <p style="font-size: 0.9rem; text-align: left; margin-top: 10px">
+              大阪出身。このラジオの考案者。最初はネタでラジオ配信をやろうと持ち掛けてきたが、なんか気が付いたらちゃんとした番組とかが配信されるようになっていて困惑している。
+            </p>
+          </div>
+          <div class="sponsor-card">
+            <h3>💤 夜勤対策委員会</h3>
+            <img
+              src="./assets/yakin.jpg"
+              style="
+                width: 6em;
+                height: 6em;
+                object-fit: cover;
+                border-radius: 9999px;
+                margin: 0.5em;
+              "
+            />
+            <p>「夜更かしをやめて、健康な生活をしよう」</p>
+            <p style="font-size: 0.9rem; text-align: left; margin-top: 10px">
+              快適な睡眠環境を追求する架空のライフスタイルブランド。オリジナル快眠枕やアロマオイルの開発、そして本ラジオのスポンサーでもあります。
+            </p>
+          </div>
+          <div class="sponsor-card">
+            <h3>🌵 株式会社エンカウント</h3>
+            <img
+              src="./assets/encount.jpg"
+              style="
+                width: 6em;
+                height: 6em;
+                object-fit: cover;
+                border-radius: 9999px;
+                margin: 0.5em;
+              "
+            />
+            <p>「エンカは善なんよ」</p>
+            <p style="font-size: 0.9rem; text-align: left; margin-top: 10px">
+              千葉発祥の新興企業。インターネットを通じて人と人を繋ぐ「エンカウント」を理念に、幅広い事業を手掛ける。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- セクション6：お問い合わせ -->
+      <section id="contact">
+        <h2>お問い合わせ</h2>
+        <p>
+          ねるるラジオへのご意見、ご感想、番組へのお便りやスポンサー契約に関するお問い合わせは、以下のメールアドレス、またはフォームよりご連絡ください。
+        </p>
+        <p>
+          📩
+          <strong
+            >メール：
+            <a href="mailto:info@enoki.xyz" style="color: var(--accent-color)"
+              >info@enoki.xyz</a
+            ></strong
+          >
+        </p>
+
+        <form
+          onsubmit="
+            alert('お問い合わせを送信しました（デモ）')
+            return false
+          "
+          style="margin-top: 20px"
+        >
+          <div class="form-group">
+            <label for="name">お名前 / ラジオネーム</label>
+            <input type="text" id="name" required placeholder="ねるる太郎" />
+          </div>
+          <div class="form-group">
+            <label for="email">メールアドレス</label>
+            <input
+              type="email"
+              id="email"
+              required
+              placeholder="your@email.com"
+            />
+          </div>
+          <div class="form-group">
+            <label for="message">メッセージ / お便り</label>
+            <textarea
+              id="message"
+              rows="5"
+              required
+              placeholder="番組への熱いメッセージをお待ちしています！"
+            ></textarea>
+          </div>
+          <button type="submit" disabled>送信する（未実装）</button>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 エノキ電気 & ねるる. All Rights Reserved.</p>
+    </footer>
+
+    <script src="script.js" defer></script>
+    <script>
+      navigator.serviceWorker.register('./sw.js')
+      function toggleEmbed() {
+        const embed = document.getElementById('embed')
+        const embedNow = embed.style.display
+        if (embedNow == 'none') {
+          embed.style.display = 'unset'
+        } else {
+          embed.style.display = 'none'
+        }
+      }
+    </script>
+  </body>
+</html>
