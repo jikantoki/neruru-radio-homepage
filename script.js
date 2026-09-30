@@ -36,11 +36,23 @@ function getProgramName(hour, minute) {
   }
 }
 
+function getJSTDate() {
+  const now = new Date()
+
+  // 実行環境のUTC時刻のミリ秒数を取得
+  const utcMills = now.getTime() + now.getTimezoneOffset() * 60000
+
+  // 日本時間（UTC+9時間）のミリ秒数を計算
+  const jstOffset = 9 * 60 * 60 * 1000
+
+  // 強制的に日本時間に固定されたDateオブジェクトを返す
+  return new Date(utcMills + jstOffset)
+}
+
 // タイムライン生成とレンダリング
 function generateTimeline() {
-  const now = new Date()
   let slots = []
-  let checkTime = new Date(now)
+  let checkTime = getJSTDate()
   checkTime.setSeconds(0)
   checkTime.setMilliseconds(0)
 
