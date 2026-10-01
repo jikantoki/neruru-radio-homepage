@@ -1,19 +1,11 @@
 // 番組表スケジュール判定ロジック
 function getProgramName(hour, minute) {
+  // 0. 毎時00分：ねるるミュージックアカデミー
+  if (minute === 0) return 'ねるるミュージックアカデミー'
   // 1. 毎時30分：ネルラジニュース
   if (minute === 30) return 'ネルラジニュース'
   // 2. 毎時45分：ガジェットマニア
   if (minute === 45) return 'ガジェットマニア'
-
-  // 3. 毎時00分
-  if (minute === 0) {
-    if (hour >= 23 || hour <= 4) {
-      return 'ワールド・ナウ'
-    }
-    if (hour >= 5 && hour <= 22) {
-      return 'ラジオオギリ'
-    }
-  }
 
   // 4. 毎時15分
   if (minute === 15) {
@@ -63,7 +55,7 @@ function generateTimeline() {
   // 現在より未来の直近4つのスロットを確保
   while (slots.length < 4) {
     checkTime.setMinutes(checkTime.getMinutes() + 15)
-    if (checkTime > now) {
+    if (checkTime > getJSTDate()) {
       slots.push(new Date(checkTime))
     }
   }
@@ -79,7 +71,7 @@ function generateTimeline() {
     const slotMinute = slot.getMinutes()
 
     // 何分後かを計算
-    const diffMs = slot - now
+    const diffMs = slot - getJSTDate()
     const diffMins = Math.ceil(diffMs / (1000 * 60))
 
     const pName = getProgramName(slotHour, slotMinute)
