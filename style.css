@@ -22,7 +22,18 @@ body {
   font-family:
     'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans',
     Meiryo, sans-serif;
-  background-color: var(--bg-color);
+  background:
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(90, 60, 185, 0.15),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 20% 80%,
+      rgba(137, 87, 229, 0.1),
+      transparent 45%
+    ),
+    var(--bg-color);
   color: var(--text-color);
   line-height: 1.6;
 }
@@ -263,4 +274,9 @@ footer {
   padding: 40px;
   border-top: 1px solid #21262d;
   font-size: 0.9rem;
+}
+
+a {
+  color: var(--accent-color);
+  text-decoration: none;
 }
