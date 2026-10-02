@@ -9,13 +9,13 @@ function getProgramName(hour, minute) {
 
   // 4. 毎時15分
   if (minute === 15) {
-    if (hour >= 21 || hour <= 4) {
+    if (hour >= 23 || hour <= 4) {
       return 'ねるるの眠れない話'
     }
     if (hour >= 5 && hour <= 10) {
       return 'オハラジオ'
     }
-    if (hour >= 11 && hour <= 20) {
+    if (hour >= 11 && hour <= 23) {
       return 'サボさんの千葉来ません？'
     }
   }
