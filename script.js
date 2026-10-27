@@ -120,7 +120,12 @@ function generateTimeline(openStatus) {
 
     // 番組情報のテキスト読み込みと追加
     let programList = []
-    if (slotMinute === 15) {
+    if (slotMinute === 0) {
+      programList.push(
+        '音楽理論や打ち込み楽曲の極意について、初心者でもわかりやすく解説する音楽学習番組。音楽制作に興味がある方は必聴です。',
+      )
+      programList = [...programList, ...(await fetchText('00-pickup.txt'))]
+    } else if (slotMinute === 15) {
       if (slotHour >= 23 || slotHour <= 4) {
         programList.push(
           'どうしても目が冴えて眠れない夜、あなたにそっと語りかけるおやすみ前専用トーク。ナビゲーターの「ねるる」が、心温まるエピソードや不思議な昔話を静かにお話しします。',
@@ -134,12 +139,20 @@ function generateTimeline(openStatus) {
         programList.push(
           '千葉を愛し、千葉に愛された男「サボさん」が、千葉県の隠れた名所や絶品グルメ、ローカルな魅力を熱く語り尽くす観光勝手に応援バラエティ。',
         )
-        programList.push(await fetchText('15-sabochiba-pickup.txt'))
+        programList = [
+          ...programList,
+          ...(await fetchText('15-sabochiba-pickup.txt')),
+        ]
       }
     } else if (slotMinute == 30) {
       programList.push(
         '1時間に1回、世の中の動きをコンパクトにまとめた11分。これさえ聴いておけば、忙しいあなたも社会のトレンドに遅れることはありません。',
       )
+    } else if (slotMinute == 45) {
+      programList.push(
+        'ガジェットやプログラミング、AIに興味のある皆さんをしっかりと沼に突き落とす番組。これを聞けばあなたも立派なキモオタです。',
+      )
+      programList = [...programList, ...(await fetchText('45-pickup.txt'))]
     } else {
       programList = await fetchText(
         `${String(slotMinute).padEnd(2, '0')}-pickup.txt`,
