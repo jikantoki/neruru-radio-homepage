@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ねるるラジオ 配信用サムネイル</title>
     <!-- 外部CSSファイルの読み込み -->
-    <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="./assets/logo.jpg" />
     <link rel="manifest" href="./manifest.json" />
     <meta property="og:title" content="ねるるラジオ 公式ホームページ" />
@@ -24,15 +23,239 @@
       content="https://radio.enoki.xyz/pages/img/thumbnail.jpg"
     />
     <meta property="og:site_name" content="ねるるラジオ" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-size: 48px;
+        font-family: 'Zen Maru Gothic', sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        --accent-color: 5, 162, 195;
+        --surface-color: 4, 132, 158;
+        --footer-color: 3, 66, 66;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p {
+        margin: 0;
+      }
+      .timeline-detail {
+        display: block !important;
+        text-align: left;
+        margin-left: 4em;
+      }
+      .timeline-name {
+        font-weight: bold;
+      }
+      .timeline-button {
+        display: none;
+      }
+      .detail-description {
+        display: none;
+      }
+      .timeline-main {
+        font-size: 48px;
+        white-space: nowrap;
+      }
+      .timeline-list {
+        margin: 0;
+        padding: 0;
+      }
+      .detail-body {
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+    </style>
   </head>
 
-  <body>
-    <iframe
-      src="https://radio.enoki.xyz/public/neruru-radio/embed?hide_volume=1&hide_streams=1&volume=100&layout=vertical"
-      frameborder="0"
-      allowtransparency="true"
-      style="width: 100%; height: 150px; border: 0"
-    ></iframe>
-    <img src="./img/Nくん_筋肉.png" />
+  <body style="margin: 0">
+    <div
+      style="
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        background: rgb(var(--accent-color));
+        color: white;
+      "
+    >
+      <div
+        class="top"
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          background: rgb(var(--accent-color));
+          padding: 8px 32px;
+        "
+      >
+        <div style="display: flex; align-items: center">
+          <img src="./img/transparent.png" style="height: 4em" />
+          <div>
+            <h1>ねるるラジオ</h1>
+            <p>24時間AIで配信し続ける、次世代ラジオ</p>
+          </div>
+        </div>
+        <div id="clock" style="width: 11em; text-align: right; font-size: 64px">
+          2026年12月34日<br /><b>56:78</b>
+        </div>
+      </div>
+      <div
+        class="main"
+        style="
+          background-color: rgb(
+            var(--surface-color)
+          ); /* 1. 単色の背景色を指定 */
+
+          /* 2. 背景画像を指定 */
+          background-image:
+            linear-gradient(
+              rgba(var(--surface-color), 0.5),
+              rgba(var(--surface-color), 0.5)
+            ),
+            url('./img/Nくん_筋肉.png');
+
+          /* 3. 画像を繰り返さない */
+          background-repeat: no-repeat;
+
+          /* 4. 画像の位置をオフセット */
+          background-position: right 150px top 100px;
+          padding: 8px 32px;
+          height: stretch;
+          overflow: hidden;
+        "
+      >
+        <div
+          style="
+            display: flex;
+            height: 100%;
+            justify-content: space-evenly;
+            flex: 1;
+          "
+        >
+          <div
+            style="
+              text-align: center;
+              width: calc(1920px * 0.4);
+              overflow: hidden;
+            "
+          >
+            <p style="margin-bottom: 16px">現在の再生情報</p>
+            <img
+              id="nowPlayThumbnail"
+              src="./img/512x512.png"
+              style="
+                height: 400px;
+                width: 400px;
+                object-fit: cover;
+                border-radius: 32px;
+              "
+              onerror="this.src = './img/512x512.png'"
+            />
+            <p id="nowPlayArtist" style="font-size: 32px">現在のArtist</p>
+            <p id="nowPlayTitle">現在のTitle</p>
+            <p style="font-size: 32px">
+              次:
+              <span id="nextPlayText">次のNextText</span>
+            </p>
+          </div>
+          <div
+            style="
+              text-align: center;
+              width: calc(1920px * 0.6);
+              overflow: hidden;
+            "
+          >
+            <p style="margin-bottom: 16px">番組表</p>
+            <ul
+              class="timeline-list"
+              id="timelineMenu"
+              style="list-style: none; font-size: 24px"
+            >
+              <!-- JavaScriptによりここに4つの未来番組スロットが挿入されます -->
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div
+        class="footer"
+        style="background: rgb(var(--footer-color)); padding: 8px 32px"
+      >
+        <p>お問い合わせ:　　　エノキ電気　　　https://enoki.xyz</p>
+      </div>
+    </div>
+    <script src="script.js" defer></script>
+    <script>
+      function updateClock() {
+        const now = new Date()
+
+        // 年・月・日を取得
+        const year = now.getFullYear()
+        // 月は0～11で取得されるため +1 が必要です
+        const month = String(now.getMonth() + 1).padStart(2, '0')
+        const day = String(now.getDate()).padStart(2, '0')
+
+        // 時・分・秒を取得
+        const hours = String(now.getHours()).padStart(2, '0')
+        const minutes = String(now.getMinutes()).padStart(2, '0')
+        const seconds = String(now.getSeconds()).padStart(2, '0')
+
+        // 表示用文字列を整形 (例: 2026年10月27日 17:12:05)
+        const timeString = `${year}年${month}月${day}日<br><b>${hours}:${minutes}:${seconds}</b>`
+
+        // #clock のテキストを更新
+        document.getElementById('clock').innerHTML = timeString
+      }
+
+      // 最初の表示を遅延なく行うために即時実行
+      updateClock()
+
+      // 1秒 (1000ミリ秒) ごとに updateClock 関数を呼び出す
+      setInterval(updateClock, 200)
+
+      async function updateTrack() {
+        const newTrackInfoObject = await fetch(
+          'https://radio.enoki.xyz/api/nowplaying/neruru-radio',
+        )
+        const newTrackInfo = await newTrackInfoObject.json()
+
+        const nowPlaying = {
+          title: newTrackInfo.now_playing.song.title,
+          artist: newTrackInfo.now_playing.song.artist,
+          album: newTrackInfo.now_playing.song.album,
+          text: newTrackInfo.now_playing.song.text,
+          thumbnail: newTrackInfo.now_playing.song.art,
+        }
+
+        const nextPlaying = {
+          title: newTrackInfo.playing_next.song.title,
+          artist: newTrackInfo.playing_next.song.artist,
+          album: newTrackInfo.playing_next.song.album,
+          text: newTrackInfo.playing_next.song.text,
+          thumbnail: newTrackInfo.playing_next.song.art,
+        }
+
+        console.log(nowPlaying)
+        console.log(nextPlaying)
+
+        document.getElementById('nowPlayTitle').innerText = nowPlaying.title
+        document.getElementById('nowPlayArtist').innerText = nowPlaying.artist
+        document.getElementById('nextPlayText').innerText = nextPlaying.text
+        document.getElementById('nowPlayThumbnail').src = nowPlaying.thumbnail
+      }
+
+      updateTrack()
+    </script>
   </body>
 </html>

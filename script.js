@@ -40,6 +40,7 @@ function getJSTDate() {
   // 強制的に日本時間に固定されたDateオブジェクトを返す
   return new Date(utcMills + jstOffset)
 }
+
 // タイムライン生成とレンダリング（修正版）
 function generateTimeline(openStatus) {
   let slots = []
@@ -101,8 +102,8 @@ function generateTimeline(openStatus) {
             <div class="timeline-detail" id="detailProgramItem${cnt}"
                 style="display: grid; grid-template-rows: ${initialGridRow}; transition: grid-template-rows 0.5s ease; overflow: hidden;">
               <div style="min-height: 0;">
-                <p style="margin: 0; padding: 10px 0;">今回、もしくは前回のトーク内容（毎時23分に番組を生成しています）</p>
-                <div id="detailBody${cnt}"></div>
+                <p style="margin: 0; padding: 10px 0;" class="detail-description">今回、もしくは前回のトーク内容（毎時23分に番組を生成しています）</p>
+                <div id="detailBody${cnt}" class="detail-body"></div>
               </div>
             </div>
         `
