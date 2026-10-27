@@ -134,6 +134,7 @@ function generateTimeline(openStatus) {
         programList.push(
           '千葉を愛し、千葉に愛された男「サボさん」が、千葉県の隠れた名所や絶品グルメ、ローカルな魅力を熱く語り尽くす観光勝手に応援バラエティ。',
         )
+        programList.push(await fetchText('15-sabochiba-pickup.txt'))
       }
     } else if (slotMinute == 30) {
       programList.push(
