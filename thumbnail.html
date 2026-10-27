@@ -231,7 +231,7 @@
       // 最初の表示を遅延なく行うために即時実行
       updateClock()
 
-      // 1秒 (1000ミリ秒) ごとに updateClock 関数を呼び出す
+      // 0.2秒ごとに updateClock 関数を呼び出す
       setInterval(updateClock, 200)
 
       async function updateTrack() {
@@ -263,6 +263,9 @@
       }
 
       updateTrack()
+
+      // 0.2秒ごとに updateTrack 関数を呼び出す
+      setInterval(updateTrack, 200)
     </script>
   </body>
 </html>
