@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="ja">
   <head
     prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#"
@@ -75,6 +75,34 @@
         border: none !important;
         padding: 0 !important;
         margin: 0 !important;
+      }
+      .footer {
+        overflow: hidden;
+        white-space: nowrap;
+      }
+      .footer-ticker {
+        display: flex;
+        width: max-content;
+        animation: footer-ticker-scroll var(--scroll-duration, 60s) linear
+          infinite;
+      }
+      .footer-ticker:hover {
+        animation-play-state: paused;
+      }
+      .footer-text {
+        display: inline-block;
+        white-space: nowrap;
+        flex-shrink: 0;
+        margin: 0;
+        padding-right: 4em;
+      }
+      @keyframes footer-ticker-scroll {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
       }
     </style>
   </head>
@@ -214,15 +242,63 @@
         class="footer"
         style="
           background: rgb(var(--footer-color));
-          padding: 8px 32px;
+          padding: 8px 0;
           position: relative;
           bottom: 0;
           left: 0;
+          height: 2em;
         "
       >
-        <p style="overflow: hidden; white-space: nowrap">
-          提供:　　　エノキ電気　　　https://enoki.xyz
-        </p>
+        <div class="footer-ticker">
+          <p class="footer-text">
+            <span>クレジット表記:</span>
+            <span>VOICEVOX（四国めたん、春日部つむぎ、ずんだもん）</span>
+            <span style="padding: 0 2em"></span>
+            <span>提供:</span>
+            <span>エノキ電気</span>
+            <span>https://enoki.xyz</span>、
+            <span>ねるる</span>
+            <span>https://main.architectural-n.net/</span>、
+            <span>全日本ダークウェブ普及協会</span>
+            <span>https://joa.enoki.xyz</span>、
+            <span>株式会社エンカウント</span>
+            <span>https://saisabo10.com/</span>、
+            <span>夜勤対策委員会</span>
+            <span style="padding: 0 2em"></span>
+            <span>お知らせ:</span>
+            <span
+              >当ラジオでは、提供として紹介するスポンサー様、及びラジオで使用する楽曲を提供して頂ける方を大大大募集！！！</span
+            >
+            <span>ご相談は</span>
+            <span>info@enoki.xyz</span>
+            <span>にて承っております！</span>
+            <span>質問・相談も随時返すのでお気軽にお問い合わせください～</span>
+          </p>
+          <p class="footer-text" data-ticker-clone="true" aria-hidden="true">
+            <span>クレジット表記:</span>
+            <span>VOICEVOX（四国めたん、春日部つむぎ、ずんだもん）</span>
+            <span style="padding: 0 2em"></span>
+            <span>提供:</span>
+            <span>エノキ電気</span>
+            <span>https://enoki.xyz</span>、
+            <span>ねるる</span>
+            <span>https://main.architectural-n.net/</span>、
+            <span>全日本ダークウェブ普及協会</span>
+            <span>https://joa.enoki.xyz</span>、
+            <span>株式会社エンカウント</span>
+            <span>https://saisabo10.com/</span>、
+            <span>夜勤対策委員会</span>
+            <span style="padding: 0 2em"></span>
+            <span>お知らせ:</span>
+            <span
+              >当ラジオでは、提供として紹介するスポンサー様、及びラジオで使用する楽曲を提供して頂ける方を大大大募集！！！</span
+            >
+            <span>ご相談は</span>
+            <span>info@enoki.xyz</span>
+            <span>にて承っております！</span>
+            <span>質問・相談も随時返すのでお気軽にお問い合わせください～</span>
+          </p>
+        </div>
       </div>
     </div>
     <script src="script.js" defer></script>
@@ -286,6 +362,55 @@
 
       // 0.2秒ごとに updateTrack 関数を呼び出す
       setInterval(updateTrack, 200)
+
+      // フッターのテキストスクロール速度を一定（文字数に依存しない速度）に保つ処理
+      function initFooterTicker() {
+        const ticker = document.querySelector('.footer-ticker')
+        const firstText = ticker ? ticker.querySelector('.footer-text') : null
+        if (!ticker || !firstText) return
+
+        // 2つ目のクローンを常に1つ目の内容と同期
+        let clone = ticker.querySelector('[data-ticker-clone="true"]')
+        if (!clone) {
+          clone = firstText.cloneNode(true)
+          clone.setAttribute('aria-hidden', 'true')
+          clone.setAttribute('data-ticker-clone', 'true')
+          ticker.appendChild(clone)
+        } else {
+          clone.innerHTML = firstText.innerHTML
+        }
+
+        // 1秒あたりに進むピクセル数（px/s）
+        // 数値を大きくすると速く、小さくするとゆっくりになります（120〜160px/s 推奨）
+        const SPEED_PX_PER_SEC = 140
+
+        function updateSpeed() {
+          const textWidth = firstText.offsetWidth
+          if (textWidth > 0) {
+            const duration = textWidth / SPEED_PX_PER_SEC
+            ticker.style.setProperty(
+              '--scroll-duration',
+              duration.toFixed(2) + 's',
+            )
+          }
+        }
+
+        updateSpeed()
+        if (document.fonts) {
+          document.fonts.ready.then(updateSpeed)
+        }
+
+        if (window.ResizeObserver) {
+          new ResizeObserver(() => {
+            if (clone && clone.innerHTML !== firstText.innerHTML) {
+              clone.innerHTML = firstText.innerHTML
+            }
+            updateSpeed()
+          }).observe(firstText)
+        }
+      }
+
+      initFooterTicker()
     </script>
   </body>
 </html>
