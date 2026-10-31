@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="ja">
+  <head
+    prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#"
+  >
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ねるるラジオ YouTube Short用画面</title>
+    <!-- 外部CSS・アセットの読み込み -->
+    <link rel="icon" href="./assets/logo.jpg" />
+    <link rel="manifest" href="./manifest.json" />
+    <meta property="og:title" content="ねるるラジオ 公式ホームページ" />
+    <meta
+      property="og:description"
+      content="ねるる&エノキ電気が展開する、24時間AIによって放送し続けるラジオチャンネル"
+    />
+    <meta
+      property="og:url"
+      content="https://radio.enoki.xyz/pages/vertical.html"
+    />
+    <meta
+      property="og:image"
+      content="https://radio.enoki.xyz/pages/img/thumbnail.jpg"
+    />
+    <meta property="og:site_name" content="ねるるラジオ" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #000;
+        font-family: 'Zen Maru Gothic', sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        --accent-color: 5, 162, 195;
+        --surface-color: 4, 132, 158;
+        --footer-color: 3, 66, 66;
+        user-select: none;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p {
+        margin: 0;
+      }
+
+      /* 画面固定コンテナ (1080px x 1920px 固定) */
+      .short-container {
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        background: rgb(var(--accent-color));
+        color: white;
+        position: relative;
+        margin: 0 auto;
+      }
+
+      /* ヘッダーエリア（文字サイズ約1.5倍化） */
+      .top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: rgb(var(--accent-color));
+        padding: 38px 44px 18px;
+        flex-shrink: 0;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+      }
+      .top-branding {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      .top-logo {
+        height: 130px;
+        width: auto;
+      }
+      .top-title h1 {
+        font-size: 60px;
+        line-height: 1.1;
+        letter-spacing: 0.04em;
+        font-weight: 700;
+      }
+      .top-title p {
+        font-size: 28px;
+        opacity: 0.9;
+        margin-top: 6px;
+      }
+      #clock {
+        text-align: right;
+        font-size: 48px;
+        line-height: 1.25;
+        white-space: nowrap;
+        font-variant-numeric: tabular-nums;
+      }
+      #clock b {
+        font-size: 64px;
+        letter-spacing: 0.03em;
+      }
+
+      /* メインコンテンツエリア */
+      .main {
+        flex: 1;
+        background-color: rgb(var(--surface-color));
+        background-image:
+          linear-gradient(
+            rgba(var(--surface-color), 0.62),
+            rgba(var(--surface-color), 0.62)
+          ),
+          url('./img/Nくん_筋肉.png');
+        background-repeat: no-repeat;
+        background-position: center 72%;
+        background-size: 720px auto;
+        padding: 20px 48px 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow: hidden;
+      }
+
+      /* セクション共通見出し（1.5倍: 42px） */
+      .section-heading {
+        font-size: 42px;
+        font-weight: 700;
+        text-align: center;
+        letter-spacing: 0.08em;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        opacity: 0.95;
+      }
+      .section-heading::before,
+      .section-heading::after {
+        content: '';
+        display: inline-block;
+        width: 50px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.45);
+        border-radius: 2px;
+      }
+
+      /* 現在の再生情報セクション（大型化 & 文字サイズ1.5倍） */
+      .now-playing-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 100%;
+        max-width: 960px;
+        margin: 0 auto;
+      }
+      #nowPlayThumbnail {
+        width: 600px;
+        height: 600px;
+        object-fit: cover;
+        border-radius: 36px;
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+        border: 3px solid rgba(255, 255, 255, 0.25);
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+      .now-playing-info {
+        width: 100%;
+        margin-top: 18px;
+        padding: 0 16px;
+      }
+      #nowPlayTitle {
+        font-size: 58px;
+        font-weight: 700;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 1.25;
+        text-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+      }
+      #nowPlayArtist {
+        font-size: 40px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-top: 8px;
+        opacity: 0.92;
+      }
+      .next-play-wrapper {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        font-size: 34px;
+        margin-top: 12px;
+        background: rgba(0, 0, 0, 0.3);
+        padding: 8px 26px;
+        border-radius: 24px;
+        max-width: 100%;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      .next-badge {
+        background: rgba(255, 255, 255, 0.28);
+        font-size: 24px;
+        font-weight: 700;
+        padding: 3px 14px;
+        border-radius: 10px;
+        letter-spacing: 0.05em;
+        flex-shrink: 0;
+      }
+      #nextPlayText {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* 番組表セクション（文字サイズ1.5倍） */
+      .timeline-section {
+        width: 100%;
+        max-width: 960px;
+        margin: 0 auto;
+      }
+      .timeline-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .timeline-item {
+        background: rgba(0, 0, 0, 0.24);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 18px;
+        padding: 12px 22px;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+      }
+      .timeline-main-wrapper {
+        display: flex !important;
+        align-items: center;
+        width: 100%;
+      }
+      .timeline-main {
+        font-size: 38px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        width: 100%;
+        overflow: hidden;
+      }
+      .timeline-time {
+        font-size: 30px;
+        font-weight: 700;
+        white-space: nowrap;
+        background: rgba(0, 0, 0, 0.35);
+        padding: 4px 16px;
+        border-radius: 10px;
+        color: #e0f7fa;
+        flex-shrink: 0;
+      }
+      .timeline-name {
+        font-size: 38px;
+        font-weight: 700;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex: 1;
+      }
+
+      /* 現在放送中のスロット（詳細を展開表示） */
+      .timeline-item.timeline-current {
+        background: rgba(255, 255, 255, 0.2);
+        border: 2px solid rgba(255, 255, 255, 0.7);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        padding: 16px 24px;
+      }
+      .timeline-current .timeline-time {
+        background: #e91e63;
+        color: #ffffff;
+        box-shadow: 0 0 12px rgba(233, 30, 99, 0.6);
+      }
+      .timeline-current .timeline-detail {
+        display: block !important;
+        grid-template-rows: none !important;
+        overflow: visible !important;
+        width: 100%;
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px dashed rgba(255, 255, 255, 0.35);
+      }
+      .timeline-current .detail-body {
+        display: block !important;
+        background: rgba(0, 0, 0, 0.22) !important;
+        border: 1px solid rgba(255, 255, 255, 0.18) !important;
+        border-radius: 12px !important;
+        padding: 12px 18px !important;
+        margin: 0 !important;
+        font-size: 26px !important;
+        line-height: 1.45 !important;
+        color: #f5f5f5;
+        max-height: 155px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .timeline-current .detail-body > div {
+        margin-bottom: 4px;
+      }
+      .timeline-current .detail-body > div:last-child {
+        margin-bottom: 0;
+      }
+
+      /* 未来スロットでは詳細を非表示にして余白を確保 */
+      .timeline-item:not(.timeline-current) .timeline-detail {
+        display: none !important;
+      }
+      .timeline-button {
+        display: none !important;
+      }
+      .detail-description {
+        display: none !important;
+      }
+
+      /* フッターエリア（ティッカー、1.5倍: 38px） */
+      .footer {
+        background: rgb(var(--footer-color));
+        padding: 20px 0;
+        overflow: hidden;
+        white-space: nowrap;
+        flex-shrink: 0;
+        border-top: 2px solid rgba(255, 255, 255, 0.15);
+        height: 94px;
+        display: flex;
+        align-items: center;
+      }
+      .footer-ticker {
+        display: flex;
+        width: max-content;
+        animation: footer-ticker-scroll var(--scroll-duration, 60s) linear
+          infinite;
+      }
+      .footer-ticker:hover {
+        animation-play-state: paused;
+      }
+      .footer-text {
+        font-size: 38px;
+        display: inline-block;
+        white-space: nowrap;
+        flex-shrink: 0;
+        margin: 0;
+        padding-right: 4em;
+      }
+      @keyframes footer-ticker-scroll {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="short-container">
+      <!-- 上部ヘッダー -->
+      <div class="top">
+        <div class="top-branding">
+          <img
+            src="./img/transparent.png"
+            alt="ねるるラジオ ロゴ"
+            class="top-logo"
+          />
+          <div class="top-title">
+            <h1>ねるるラジオ</h1>
+            <p>24時間AIで配信し続ける、次世代ラジオ</p>
+          </div>
+        </div>
+        <div id="clock">
+          2026年12月34日<br /><b>56:78</b>
+        </div>
+      </div>
+
+      <!-- メインエリア -->
+      <div class="main">
+        <!-- 現在の再生情報 -->
+        <div class="now-playing-section">
+          <p class="section-heading">現在の再生情報</p>
+          <img
+            id="nowPlayThumbnail"
+            src="./img/512x512.png"
+            alt="再生中サムネイル"
+            onerror="this.src = './img/512x512.png'"
+          />
+          <div class="now-playing-info">
+            <p id="nowPlayTitle">現在のTitle</p>
+            <p id="nowPlayArtist">現在のArtist</p>
+            <div class="next-play-wrapper">
+              <span class="next-badge">次</span>
+              <span id="nextPlayText">次のText</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 番組表 -->
+        <div class="timeline-section">
+          <p class="section-heading">番組表</p>
+          <ul class="timeline-list" id="timelineMenu">
+            <!-- JavaScript (script.js) によりここにタイムラインスロットが挿入されます -->
+          </ul>
+        </div>
+      </div>
+
+      <!-- フッターティッカー -->
+      <div class="footer">
+        <div class="footer-ticker">
+          <p class="footer-text">
+            <span>クレジット表記:</span>
+            <span>VOICEVOX（四国めたん、春日部つむぎ、ずんだもん）</span>
+            <span style="padding: 0 2em"></span>
+            <span>提供:</span>
+            <span>エノキ電気</span>
+            <span>https://enoki.xyz</span>、
+            <span>ねるる</span>
+            <span>https://main.architectural-n.net/</span>、
+            <span>全日本ダークウェブ普及協会</span>
+            <span>https://joa.enoki.xyz</span>、
+            <span>株式会社エンカウント</span>
+            <span>https://saisabo10.com/</span>、
+            <span>夜勤対策委員会</span>
+            <span style="padding: 0 2em"></span>
+            <span>お知らせ:</span>
+            <span
+              >当ラジオでは、提供として紹介するスポンサー様、及びラジオで使用する楽曲を提供して頂ける方を大大大募集！！！</span
+            >
+            <span>ご相談は</span>
+            <span>info@enoki.xyz</span>
+            <span>にて承っております！</span>
+            <span>質問・相談も随時返すのでお気軽にお問い合わせください～</span>
+          </p>
+          <p class="footer-text" data-ticker-clone="true" aria-hidden="true">
+            <span>クレジット表記:</span>
+            <span>VOICEVOX（四国めたん、春日部つむぎ、ずんだもん）</span>
+            <span style="padding: 0 2em"></span>
+            <span>提供:</span>
+            <span>エノキ電気</span>
+            <span>https://enoki.xyz</span>、
+            <span>ねるる</span>
+            <span>https://main.architectural-n.net/</span>、
+            <span>全日本ダークウェブ普及協会</span>
+            <span>https://joa.enoki.xyz</span>、
+            <span>株式会社エンカウント</span>
+            <span>https://saisabo10.com/</span>、
+            <span>夜勤対策委員会</span>
+            <span style="padding: 0 2em"></span>
+            <span>お知らせ:</span>
+            <span
+              >当ラジオでは、提供として紹介するスポンサー様、及びラジオで使用する楽曲を提供して頂ける方を大大大募集！！！</span
+            >
+            <span>ご相談は</span>
+            <span>info@enoki.xyz</span>
+            <span>にて承っております！</span>
+            <span>質問・相談も随時返すのでお気軽にお問い合わせください～</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- スクリプトの読み込み -->
+    <script src="script.js" defer></script>
+    <script>
+      function updateClock() {
+        const now = new Date()
+
+        // 年・月・日を取得
+        const year = now.getFullYear()
+        // 月は0～11で取得されるため +1 が必要です
+        const month = String(now.getMonth() + 1).padStart(2, '0')
+        const day = String(now.getDate()).padStart(2, '0')
+
+        // 時・分・秒を取得
+        const hours = String(now.getHours()).padStart(2, '0')
+        const minutes = String(now.getMinutes()).padStart(2, '0')
+        const seconds = String(now.getSeconds()).padStart(2, '0')
+
+        // 表示用文字列を整形
+        const timeString = `${year}年${month}月${day}日<br><b>${hours}:${minutes}:${seconds}</b>`
+
+        // #clock のテキストを更新
+        const clockEl = document.getElementById('clock')
+        if (clockEl) {
+          clockEl.innerHTML = timeString
+        }
+      }
+
+      // 最初の表示を遅延なく行うために即時実行
+      updateClock()
+
+      // 0.2秒ごとに updateClock 関数を呼び出す
+      setInterval(updateClock, 200)
+
+      async function updateTrack() {
+        try {
+          const res = await fetch(
+            'https://radio.enoki.xyz/api/nowplaying/neruru-radio',
+          )
+          if (!res.ok) return
+          const newTrackInfo = await res.json()
+
+          const nowPlaying = {
+            title: newTrackInfo.now_playing.song.title,
+            artist: newTrackInfo.now_playing.song.artist,
+            album: newTrackInfo.now_playing.song.album,
+            text: newTrackInfo.now_playing.song.text,
+            thumbnail: newTrackInfo.now_playing.song.art,
+          }
+
+          const nextPlaying = {
+            title: newTrackInfo.playing_next.song.title,
+            artist: newTrackInfo.playing_next.song.artist,
+            album: newTrackInfo.playing_next.song.album,
+            text: newTrackInfo.playing_next.song.text,
+            thumbnail: newTrackInfo.playing_next.song.art,
+          }
+
+          const titleEl = document.getElementById('nowPlayTitle')
+          const artistEl = document.getElementById('nowPlayArtist')
+          const nextTextEl = document.getElementById('nextPlayText')
+          const thumbEl = document.getElementById('nowPlayThumbnail')
+
+          if (titleEl) titleEl.innerText = nowPlaying.title || '配信中'
+          if (artistEl) artistEl.innerText = nowPlaying.artist || 'ねるるラジオ'
+          if (nextTextEl) nextTextEl.innerText = nextPlaying.text || '次の番組'
+          if (thumbEl && nowPlaying.thumbnail) {
+            thumbEl.src = nowPlaying.thumbnail
+          }
+        } catch (e) {
+          // ネットワークエラー等のフォールバック
+        }
+      }
+
+      updateTrack()
+
+      // 0.2秒ごとに updateTrack 関数を呼び出す
+      setInterval(updateTrack, 200)
+
+      // フッターのテキストスクロール速度を一定（文字数に依存しない速度）に保つ処理
+      function initFooterTicker() {
+        const ticker = document.querySelector('.footer-ticker')
+        const firstText = ticker ? ticker.querySelector('.footer-text') : null
+        if (!ticker || !firstText) return
+
+        // 2つ目のクローンを常に1つ目の内容と同期
+        let clone = ticker.querySelector('[data-ticker-clone="true"]')
+        if (!clone) {
+          clone = firstText.cloneNode(true)
+          clone.setAttribute('aria-hidden', 'true')
+          clone.setAttribute('data-ticker-clone', 'true')
+          ticker.appendChild(clone)
+        } else {
+          clone.innerHTML = firstText.innerHTML
+        }
+
+        // 1秒あたりに進むピクセル数（px/s）
+        const SPEED_PX_PER_SEC = 140
+
+        function updateSpeed() {
+          const textWidth = firstText.offsetWidth
+          if (textWidth > 0) {
+            const duration = textWidth / SPEED_PX_PER_SEC
+            ticker.style.setProperty(
+              '--scroll-duration',
+              duration.toFixed(2) + 's',
+            )
+          }
+        }
+
+        updateSpeed()
+        if (document.fonts) {
+          document.fonts.ready.then(updateSpeed)
+        }
+
+        if (window.ResizeObserver) {
+          new ResizeObserver(() => {
+            if (clone && clone.innerHTML !== firstText.innerHTML) {
+              clone.innerHTML = firstText.innerHTML
+            }
+            updateSpeed()
+          }).observe(firstText)
+        }
+      }
+
+      initFooterTicker()
+    </script>
+  </body>
+</html>

@@ -28,7 +28,7 @@ Google Geminiが番組の台本を執筆し、VOICEVOXのAI音声合成エンジ
 本リポジトリは以下の役割を持っています：
 
 1. **公式ポータルWebサイト**: オンエア中のプレイヤー、リアルタイムタイムライン、番組情報、スポンサー情報の提供
-2. **配信画面・サムネイル生成**: OBS配信やモニタ用のリアルタイム情報表示（`thumbnail.html`）
+2. **配信画面・サムネイル生成**: OBS配信やモニタ用のリアルタイム情報表示（`thumbnail.html`）、YouTube Shorts等の縦型配信用画面（`vertical.html`）
 3. **Podcast / RSS配信**: 生成された各番組のmp3音声と、Apple Podcasts/Spotify等のプラットフォーム向けRSSフィード（XML）のホスティング
 
 ---
@@ -44,8 +44,9 @@ Google Geminiが番組の台本を執筆し、VOICEVOXのAI音声合成エンジ
   - 一般のWeb（クリアネット）だけでなく、Tor（Onionアドレス）経由でのアクセス・リスニングにも完全対応。
 - **PWA（Progressive Web Apps）対応**
   - `manifest.json` と `sw.js` により、スマートフォンやPCでスタンドアロンアプリとしてインストール可能。
-- **OBS / 配信向けオーバーレイ画面 (`thumbnail.html`)**
-  - 配信サムネイルや配信用オーバーレイとして利用できる大画面用UI。ティッカースクロールフッターを搭載。
+- **OBS / 配信向けオーバーレイ画面 (`thumbnail.html` / `vertical.html`)**
+  - **横型配信向け (`thumbnail.html`)**: 1920px × 1080px（16:9）。OBS配信やモニタ用の大画面UI。ティッカースクロールフッターを搭載。
+  - **YouTube Shorts / 縦型配信向け (`vertical.html`)**: 1080px × 1920px（9:16固定）。スマホ画面に最適化した大型サムネイル（600px角）と約1.5倍の拡大フォント。現在放送中の番組詳細を展開しつつ、YouTube Shorts特有のUIオーバーレイ（いいね・コメント等）を考慮したセーフエリア設計。
 
 ---
 
@@ -71,7 +72,8 @@ Google Geminiが番組の台本を執筆し、VOICEVOXのAI音声合成エンジ
 ```text
 .
 ├── index.html              # 公式ホームページ（メインフロントエンド）
-├── thumbnail.html          # 配信サムネイル / OBS配信用リアルタイムオーバーレイ
+├── thumbnail.html          # 配信サムネイル / OBS配信用リアルタイムオーバーレイ（横型 1920x1080）
+├── vertical.html           # YouTube Shorts / 縦型配信用オーバーレイ（縦型 1080x1920）
 ├── script.js               # タイムライン動的生成、JST計算、API取得ロジック
 ├── style.css               # サイト共通スタイルシート（ダークテーマ）
 ├── manifest.json           # PWAマニフェスト設定
@@ -134,6 +136,11 @@ Google Geminiが番組の台本を執筆し、VOICEVOXのAI音声合成エンジ
 - **デザイン (`style.css`)**
   - GitHubライクな洗練されたダークテーマ（`#0d1117`, `#161b22`, パープルアクセント `#bb86fc`）。
   - CSS Grid / Flexboxによるレスポンシブデザイン（モバイル・タブレット・デスクトップ対応）。
+- **配信オーバーレイ (`thumbnail.html` / `vertical.html`)**
+  - AzuraCastのNow Playing API（`/api/nowplaying/neruru-radio`）と非同期連携し、再生中の曲名・アーティスト・ジャケット画像・次曲をリアルタイム更新。
+  - 現在日時と秒単位のリアルタイム時計表示。
+  - 提供クレジット・スポンサー情報・募集案内を流すティッカースクロールアニメーション。
+  - `vertical.html` は YouTube Shorts（1080px × 1920px）専用設計で、600px角の大型サムネイル、1.5倍フォント、現在放送中枠のみの詳細展開、UIオーバーレイを避けるセーフエリアマージンを実装。
 
 ---
 
