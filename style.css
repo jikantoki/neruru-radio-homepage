@@ -106,6 +106,7 @@ section {
   border-radius: 12px;
   margin-bottom: 40px;
   border: 1px solid #21262d;
+  overflow: hidden;
 }
 
 h2 {
